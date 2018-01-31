@@ -18,7 +18,7 @@ class EndpointsMixin(object):
         Docs: http://docs.bitfinex.com/#ticker
         """
         symbol = params.pop('symbol')
-        endpoint = 'pubticker/'+symbol
+        endpoint = '/pubticker/'+symbol
         return self.request(endpoint, auth=False, params=params)
 
     def stats(self, **params):
@@ -26,7 +26,7 @@ class EndpointsMixin(object):
         Docs: http://docs.bitfinex.com/#stats
         """
         symbol = params.pop('symbol')
-        endpoint = 'stats/'+symbol
+        endpoint = '/stats/'+symbol
         return self.request(endpoint, auth=False, params=params)
 
     def fundingbook(self, **params):
@@ -34,7 +34,7 @@ class EndpointsMixin(object):
         Docs: http://docs.bitfinex.com/#fundingbook
         """
         symbol = params.pop('symbol')
-        endpoint = 'lendbook/'+symbol
+        endpoint = '/lendbook/'+symbol
         return self.request(endpoint, auth=False, params=params)
 
     def orderbook(self,**params):
@@ -42,7 +42,7 @@ class EndpointsMixin(object):
         Docs: http://docs.bitfinex.com/#orderbook
         """
         symbol = params.pop('symbol')
-        endpoint = 'book/'+symbol
+        endpoint = '/book/'+symbol
         return self.request(endpoint, auth=False, params=params)
 
     def trades(self,**params):
@@ -50,31 +50,29 @@ class EndpointsMixin(object):
         Docs: http://docs.bitfinex.com/#trades
         """
         symbol = params.pop('symbol')
-        endpoint = 'trades/'+symbol
+        endpoint = '/trades/'+symbol
         return self.request(endpoint, auth=False, params=params)
 
     def lends(self,**params):
         """ Get a list of the most recent funding data for the given currency: total amount lent and Flash Return Rate (in % by 365 days) over time.
         Docs: http://docs.bitfinex.com/#lends
         """
-        symbol = params.pop('symbol')
-        endpoint = 'book/'+symbol
+        currency = params.pop('currency')
+        endpoint = '/lends/'+currency
         return self.request(endpoint, auth=False, params=params)
 
     def symbols(self,**params):
         """ Get a list of valid symbol IDs.
         Docs: http://docs.bitfinex.com/#symbols
         """
-        symbol = params.pop('symbol')
-        endpoint = 'book/'+symbol
+        endpoint = '/symbols'
         return self.request(endpoint, auth=False, params=params)
 
     def symbol_details(self,**params):
         """ Get a list of valid symbol IDs and the pair details.
         Docs: http://docs.bitfinex.com/#symbol-details
         """
-        symbol = params.pop('symbol')
-        endpoint = 'book/'+symbol
+        endpoint = '/symbols_details'
         return self.request(endpoint, auth=False, params=params)
 
 
@@ -84,7 +82,7 @@ class EndpointsMixin(object):
         """ Check the balance.
         Docs: http://docs.bitfinex.com/#account-info
         """
-        endpoint = 'account_infos'
+        endpoint = '/account_infos'
         return self.request(endpoint, params=params)
 
     """ Deposit """
@@ -92,7 +90,7 @@ class EndpointsMixin(object):
         """ Return your deposit address to make a new deposit.
         Docs: http://docs.bitfinex.com/#deposit
         """
-        endpoint = 'deposit/new'
+        endpoint = '/deposit/new'
         return self.request(endpoint, payload_params=params)
 
     """ Order """
@@ -100,7 +98,7 @@ class EndpointsMixin(object):
         """ Submit a new order.
         Docs: http://docs.bitfinex.com/#new-order
         """
-        endpoint = 'order/new'
+        endpoint = '/order/new'
         params['symbol'] = symbol
         params['amount'] = amount
         params['price'] = price
@@ -113,7 +111,7 @@ class EndpointsMixin(object):
         """ Submit several new orders at once.
         Docs: http://docs.bitfinex.com/#new-order
         """
-        endpoint = 'order/new/multi'
+        endpoint = '/order/new/multi'
         params['orders']=json.dumps(orders)
         return self.request(endpoint, method='POST', payload_params=params)
 
@@ -121,7 +119,7 @@ class EndpointsMixin(object):
         """ Cancel an order.
         Docs: http://docs.bitfinex.com/#cancel-order
         """
-        endpoint = 'order/cancel'
+        endpoint = '/order/cancel'
         params['oder_id'] = order_id
         return self.request(endpoint, method='POST', payload_params=params)
 
@@ -129,7 +127,7 @@ class EndpointsMixin(object):
         """ Cancel multiples orders at once.
         Docs: http://docs.bitfinex.com/#cancel-multiple-orders
         """
-        endpoint = 'order/cancel/multi'
+        endpoint = '/order/cancel/multi'
         params['order_ids'] = order_ids
         return self.request(endpoint, method='POST', payload_params=params)
 
@@ -137,14 +135,14 @@ class EndpointsMixin(object):
         """ Cancel multiples orders at once.
         Docs: http://docs.bitfinex.com/#cancel-all-orders
         """
-        endpoint = 'order/cancel/all'
+        endpoint = '/order/cancel/all'
         return self.request(endpoint, method='POST', payload_params=params)
 
     def replace_order(self, order_id, symbol, amount, price, side, order_type):
         """ Replace an orders with a new one.
         Docs: http://docs.bitfinex.com/#replace-orders
         """
-        endpoint = 'order/cancel/replace'
+        endpoint = '/order/cancel/replace'
         params['order_id'] = order_id
         params['symbol'] = symbol
         params['amount'] = amount
@@ -158,7 +156,7 @@ class EndpointsMixin(object):
         """ Get the status of an order. Is it active? Was it cancelled? To what extent has it been executed? etc.
         Docs: http://docs.bitfinex.com/#order-status
         """
-        endpoint = 'order/status'
+        endpoint = '/order/status'
         params['order_id'] = order_id
         return self.request(endpoint, method='POST', payload_params=params)
 
@@ -166,7 +164,7 @@ class EndpointsMixin(object):
         """ View your active orders.
         Docs: http://docs.bitfinex.com/#active-orders
         """
-        endpoint = 'orders'
+        endpoint = '/orders'
         return self.request(endpoint, method='POST', payload_params=params)
 
     """ Positions """
