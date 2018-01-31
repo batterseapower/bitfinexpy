@@ -429,6 +429,8 @@ class BitfinexError(Exception):
     """
 
     def __init__(self, status_code, error_response):
-        msg = "BITFINEX API returned error code %s (%s)" % (status_code, error_response['error'])
+        this.status_code = status_code
+        this.error_response = error_response
 
+        msg = "BITFINEX API returned error code %s (%s)" % (status_code, error_response.get('error', error_response.get('message')))
         super(BitfinexError, self).__init__(msg)
