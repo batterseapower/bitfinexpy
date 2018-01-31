@@ -112,7 +112,7 @@ class EndpointsMixin(object):
         Docs: http://docs.bitfinex.com/#new-order
         """
         endpoint = '/order/new/multi'
-        params['orders']=json.dumps(orders)
+        params['orders']=orders
         return self.request(endpoint, method='POST', payload_params=params)
 
     def cancel_order(self, order_id, **params):
